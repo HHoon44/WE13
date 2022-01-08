@@ -121,12 +121,12 @@ bool StartServer(int* currentFD)
 	// -> 사실 다른 애들도 가지고 있으려면 가질 수 있거든요..?
 	// -> 제가 처음에 이녀석을 만들 때 [리슨 소켓]이라고 했어요
 
-	if (listen(*currentFD), 8) == -1)
+	if (listen((*currentFD), 8) == -1)
 	{
-	// -> 리슨에 에러가 났어요
-	perror("listen()");
-	close(*currentFD);
-	return true;
+		// -> 리슨에 에러가 났어요
+		perror("listen()");
+		close(*currentFD);
+		return true;
 	};
 
 
