@@ -69,8 +69,8 @@ public:
 
 
 // ===전역변수 선언란=== //
-struct pollfd pollFDArray[FD_NUMBER];	// -> 유저
-UserData* userFDArray[FD_NUMBER];
+struct pollfd pollFDArray[FD_NUMBER];	// -> 
+UserData* userFDArray[FD_NUMBER];		// -> 유저
 // ===전역변수 선언란=== //
 
 /// <summary>
@@ -176,8 +176,66 @@ int main()
 	if (StartServer(&listenFD))
 	{
 		return 0;
-	}
+	};
 
 	cout << "서버가 정상적으로 실행 되었습니다." << endl;
+
+	// -> pollFDArray가 제가 연락을 기다리고 있는 애들이에요
+	// -> 그러다 보니까! 일단 처음에는 연락해줄 애가 없다는 것은 확인해야겠죠!
+
+	for (int i = 0; i < FD_NUMBER; i++)
+	{
+		// -> -1이 없다는 뜻!
+		pollFDArray[i].fd = -1;
+	};
+
+	// -> 리슨 소켓도 따로 함수 만들어서 돌릴 건 아니니까!
+	pollFDArray[0].fd = listenFD;
+
+	// -> 읽기 대기중! 지금 가져왔어요~
+	pollFDArray[0].events = POLLIN;
+	pollFDArray[0].revents = 0;
+
+	// -> 무한 반복!
+	for (;;)
+	{
+		// -> 기다려요! 만약에 누군가가 저한테 메세지를 건내준다면! 그 때에서야 제가 움직이는 거에요
+		// -> 메세지가 있는지 없는지를 확인하는 방법
+		result = poll(pollFDArray, FD_NUMBER, -1);
+
+		// -> 메세지가 있어야만 뭔가 할 거에요!
+		if (result > 0)
+		{
+			// -> 0번이 리슨 소켓이었습니다!
+			// -> 0번에 들어려고 하는 애들을 체크해주긴 해야 해요!
+			if (pollFDArray[0].revents == POLLIN)
+			{
+				// -> 누가 들어왔다면!
+				// -> 들어 오세요
+				connetFD = accept(listenFD, (struct sockaddr*)&connectSocket, &addressSize);
+
+				//- > 어디보자.. 자리가 있나..
+				// -> 0번은 리슨 소켓이니까! 1번부터 찾아봅시다~
+				for (int i = 1; i < FD_NUMBER; i++)
+				{
+					if (pollFDArray[i].fd == -1)
+					{
+						// -> 자리가 있다!
+						pollFDArray[i].fd = connetFD;
+						pollFDArray[i].events = POLLIN;
+						pollFDArray[i].revents = 0;
+
+						// -> 새로운 유저 정보를 생성 합니다
+						userFDArray[i] = new UserData();
+
+						// -> 너가 이 자리에 있는 거야!
+						userFDArray[i]->FDNumber = i;
+						break;
+					};
+				};
+			};
+		};
+	};
+
 	return 0;
 }
