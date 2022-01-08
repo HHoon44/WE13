@@ -158,7 +158,7 @@ int main()
 	// -> 연결 결과 저장
 	int result = 0;
 
-	struct sockadddr_in listenSocket, connectSocket;
+	struct sockaddr_in listenSocket, connectSocket;
 	socklen_t addressSize;
 
 	// -> 받는 버퍼
