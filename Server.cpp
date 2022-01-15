@@ -42,7 +42,7 @@
 // 문자열
 #include <string.h>
 #include <unistd.h>
-#include <serverEnum.h>
+#include <ServerEnum.h>
 
 using namespace std;
 
