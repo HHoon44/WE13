@@ -146,7 +146,7 @@ void CheckMessage(char receive[], int lenght)
 	{
 	case Chat:
 		// -> 맨 앞 1바이트는 메세지 구분용이니까!
-		char* value = new char[length - 1];
+		char* value = new char[lenght - 1];
 
 		// -> 맨 앞 1바이트는 메세지 구분용!
 		// -> 메세지를 복사합니다!
