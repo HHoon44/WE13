@@ -56,7 +56,7 @@ public:
 	// -> 본인이 타고 있는 소켓의 번호를 저장해둡시다
 	// -> 나중에 애한에 연락해야 하는 일이 있을 때 유용하게 사용
 	int FDNumber = 0;
-	
+
 	UserData()
 	{
 		cout << "유저 데이터가 생성되었습니다." << endl;
@@ -139,8 +139,17 @@ bool StartServer(int* currentFD)
 /// </summary>
 void CheckMessage(char receive[], int lenght)
 {
-	// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
-	cout << receive << endl;
+	// -> 받은 메세지의 0번칸은 메세지의 타입을 정의합니다!
+	// -> 물론 나중에 255개의 메세지 타입이 부족하다라고 생각하신 경우에는
+	// -> 다른 바이트도 같이 확인을 하셔야 하겠지만! 지금은 그냥 바이트 하나만 보면 돼요!
+	switch (receive[0])
+	{
+	case Chat:
+
+		// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
+		cout << receive << endl;
+		break;
+	}
 }
 
 
