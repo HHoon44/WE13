@@ -256,7 +256,7 @@ int main()
 					// -> 굉장히 소름돋죠! 클라이언트가 뭔가 말을 했는데!
 					// -> 열어봤더니 빈 봉투다...?
 					// -> 이 상황은 클라이언트가 "연결을 끊겠다" 라는 의미 입니다!
-					if (read(pollFDArray[i].fd, bufferRecv, BUFFER_SIZE) < 1)
+					if (read(pollFDArray[i].fd, buffRecv, BUFFER_SIZE) < 1)
 					{
 						delete userFDArray[i];
 						pollFDArray[i].fd = -1;
@@ -264,7 +264,7 @@ int main()
 					}
 
 					// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
-					cout << bufferRecv << endl;
+					cout << buffRecv << endl;
 					break;
 				}
 			}
