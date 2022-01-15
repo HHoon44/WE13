@@ -18,7 +18,7 @@
 // 윈도우스 같은 경우에는 소켓이 따로 있습니다.
 // 리눅스는 모든 것을 파일 형태로 관리합니다. 소켓 조차도 파일이므로
 // 그래서 FM 넘버라고 한겁니다.
-#define FD_NUMBER 100
+#define USER_MAXIMUM 100
 // 서버가 무한한 속도로 돌아가면 물론 좋겠죠
 // 서버에 틱레이트를 조절해주실 필요학 있는데요
 // 클라이언트 같은 경우는 144프레임으로 하시는 분들 굉장히 많이 있습니다
@@ -69,8 +69,8 @@ public:
 
 
 // ===전역변수 선언란=== //
-struct pollfd pollFDArray[FD_NUMBER];	// -> 
-UserData* userFDArray[FD_NUMBER];		// -> 유저
+struct pollfd pollFDArray[USER_MAXIMUM];	// -> 
+UserData* userFDArray[USER_MAXIMUM];		// -> 유저
 // ===전역변수 선언란=== //
 
 /// <summary>
@@ -129,12 +129,9 @@ bool StartServer(int* currentFD)
 		return true;
 	};
 
-
 	// -> 아무런 문제 없이 다 잘 끝났어요
 	return false;
-
 }
-
 
 int main()
 {
@@ -183,7 +180,7 @@ int main()
 	// -> pollFDArray가 제가 연락을 기다리고 있는 애들이에요
 	// -> 그러다 보니까! 일단 처음에는 연락해줄 애가 없다는 것은 확인해야겠죠!
 
-	for (int i = 0; i < FD_NUMBER; i++)
+	for (int i = 0; i < USER_MAXIMUM; i++)
 	{
 		// -> -1이 없다는 뜻!
 		pollFDArray[i].fd = -1;
@@ -201,7 +198,7 @@ int main()
 	{
 		// -> 기다려요! 만약에 누군가가 저한테 메세지를 건내준다면! 그 때에서야 제가 움직이는 거에요
 		// -> 메세지가 있는지 없는지를 확인하는 방법
-		result = poll(pollFDArray, FD_NUMBER, -1);
+		result = poll(pollFDArray, USER_MAXIMUM, -1);
 
 		// -> 메세지가 있어야만 뭔가 할 거에요!
 		if (result > 0)
@@ -216,7 +213,7 @@ int main()
 
 				//- > 어디보자.. 자리가 있나..
 				// -> 0번은 리슨 소켓이니까! 1번부터 찾아봅시다~
-				for (int i = 1; i < FD_NUMBER; i++)
+				for (int i = 1; i < USER_MAXIMUM; i++)
 				{
 					if (pollFDArray[i].fd == -1)
 					{
@@ -238,6 +235,39 @@ int main()
 					};
 				};
 			};
+
+			// -> 0번은 리슨 소켓이니까! 위에서 처리했으니까!
+			// -> 1번부터 돌아주도록 하겠씁니다!
+			for (int i = 1; i < USER_MAXIMUM; i++)
+			{
+				// -> 이녀석이 저한테 무슨 내용을 전달을 해줬는지 보러갑시다!
+				switch (pollFDArray[i].revents)
+				{
+					// -> 암말도 안했어요! 그러면 무시!
+				case 0:
+					break;
+
+					// -> 뭔가 말을 할 때!
+				case POLLIN:
+
+					// -> 보낼 때는 write였는데 받아올 때에는 read가 되겠죠!
+					// -> 받는 용도의 버퍼를 사용해서 읽어주도록 합시다!
+					// -> 버퍼를 읽어봤는데.. 세상에나! 아무것도 들어있지 않아요!
+					// -> 굉장히 소름돋죠! 클라이언트가 뭔가 말을 했는데!
+					// -> 열어봤더니 빈 봉투다...?
+					// -> 이 상황은 클라이언트가 "연결을 끊겠다" 라는 의미 입니다!
+					if (read(pollFDArray[i].fd, bufferRecv, BUFFER_SIZE) < 1)
+					{
+						delete userFDArray[i];
+						pollFDArray.fd = -1;
+						break;
+					}
+
+					// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
+					cout << bufferRecv << endl;
+					break;
+				}
+			}
 		};
 	};
 
