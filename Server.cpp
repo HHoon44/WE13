@@ -155,7 +155,7 @@ void CheckMessage(char receive[], int length)
 		// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
 		cout << value << endl;
 
-		for (int i = 0; i < USER_MAXIMUM; i++)
+		for (int i = 1; i < USER_MAXIMUM; i++)
 		{
 			// -> 유저가 있음!
 			if (pollFDArray[i].fd != -1)
@@ -284,7 +284,6 @@ int main()
 
 					// -> 뭔가 말을 할 때!
 				case POLLIN:
-
 					// -> 보낼 때는 write였는데 받아올 때에는 read가 되겠죠!
 					// -> 받는 용도의 버퍼를 사용해서 읽어주도록 합시다!
 					// -> 버퍼를 읽어봤는데.. 세상에나! 아무것도 들어있지 않아요!
