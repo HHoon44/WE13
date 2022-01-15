@@ -162,7 +162,7 @@ void CheckMessage(char receive[], int length)
 			if (pollFDArray[i].fd != -1)
 			{
 				// -> 유저에게 채팅 내용을 전달해주기!
-				write(pollFDArray[i].fd, receive, length);
+				write(pollFDArray[i].fd, "서버에서 보내준" + receive, length);
 			}
 		}
 		break;
