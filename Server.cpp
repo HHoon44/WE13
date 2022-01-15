@@ -161,7 +161,7 @@ void CheckMessage(char receive[], int length)
 			if (pollFDArray[i].fd != -1)
 			{
 				// -> 유저에게 채팅 내용을 전달해주기!
-				write(pollFDArray[i].fd, receive, length);
+				write(pollFDArray[i].fd, "채팅받았음", 16);
 			}
 		}
 		break;
@@ -267,9 +267,9 @@ int main()
 						write(pollFDArray[i].fd, "Hi!", 4);
 
 						break;
-					};
-				};
-			};
+					}
+				}
+			}
 
 			// -> 0번은 리슨 소켓이니까! 위에서 처리했으니까!
 			// -> 1번부터 돌아주도록 하겠씁니다!
@@ -308,8 +308,8 @@ int main()
 					break;
 				}
 			}
-		};
-	};
+		}
+	}
 
 	return 0;
 }
