@@ -266,7 +266,6 @@ int main()
 
 						// -> 유저에게 반갑다고 인사해줍시다!
 						write(pollFDArray[i].fd, "Hi!", 4);
-
 						break;
 					}
 				}
@@ -308,6 +307,9 @@ int main()
 					break;
 				}
 			}
+
+			// -> 버퍼를 초기화 시켜주고 가도록 합시다!
+			memset(buffRecv, 0, BUFF_SIZE);
 		}
 	}
 
