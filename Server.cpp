@@ -8,7 +8,7 @@
 // 너무 많은 양의 전송을 하면 성능상도 그렇고 
 // 물리적인 네트워크 기기여도 한계가 있기 때문에
 // 버퍼(임시저장소)사이즈는 제한을 걸어줄게요
-#define BUFFER_SIZE 1024
+#define BUFF_SIZE 1024
 // 제한을 해야하는 요소는 굉장히 많이 있는데요
 // 동시 접속자 -> 서버가 원할하게 돌아갈 수 있도록
 // 접속 인원의 한계를 미리 정해놓습니다
@@ -42,6 +42,7 @@
 // 문자열
 #include <string.h>
 #include <unistd.h>
+#include <serverEnum.h>
 
 using namespace std;
 
@@ -55,7 +56,7 @@ public:
 	// -> 본인이 타고 있는 소켓의 번호를 저장해둡시다
 	// -> 나중에 애한에 연락해야 하는 일이 있을 때 유용하게 사용
 	int FDNumber = 0;
-
+	
 	UserData()
 	{
 		cout << "유저 데이터가 생성되었습니다." << endl;
@@ -133,6 +134,17 @@ bool StartServer(int* currentFD)
 	return false;
 }
 
+/// <summary>
+/// => 메세지를 체크하는 메서드
+/// </summary>
+void CheckMessage(char receive[], int lenght)
+{
+	// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
+	cout << receive << endl;
+}
+
+
+
 int main()
 {
 	// -> 소켓들은 전부 int로 관리 될 거에요
@@ -159,10 +171,10 @@ int main()
 	socklen_t addressSize;
 
 	// -> 받는 버퍼
-	char buffRecv[BUFFER_SIZE];
+	char buffRecv[BUFF_SIZE];
 
 	// -> 주는 버퍼
-	char buffSend[BUFFER_SIZE];
+	char buffSend[BUFF_SIZE];
 
 	// -> 일단 0으로 초기화
 	memset(buffRecv, 0, sizeof(buffRecv));
@@ -256,15 +268,20 @@ int main()
 					// -> 굉장히 소름돋죠! 클라이언트가 뭔가 말을 했는데!
 					// -> 열어봤더니 빈 봉투다...?
 					// -> 이 상황은 클라이언트가 "연결을 끊겠다" 라는 의미 입니다!
-					if (read(pollFDArray[i].fd, buffRecv, BUFFER_SIZE) < 1)
+					if (read(pollFDArray[i].fd, buffRecv, BUFF_SIZE) < 1)
 					{
 						delete userFDArray[i];
 						pollFDArray[i].fd = -1;
 						break;
 					}
 
-					// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
-					cout << buffRecv << endl;
+					// -> 메시지를 해석해봅시다!
+					// -> 일반적인 채팅은 그렇게까지 막 돌려서 표현하진 않을거에요!
+					// -> 이동 명령, 공격 명령, 인벤토리 사용같은 글자를 활용하는게 아니라
+					// -> 숫자나 그런 쉽게 눈에 보이지 않는 내용을 처리할 때에는
+					// -> 조금더 복잡한 과정을 거칠 거거든요!
+					// -> 그래서 아예  함수로 돌려주도록 할게요!
+					CheckMessage(buffRecv, BUFF_SIZE);
 					break;
 				}
 			}
