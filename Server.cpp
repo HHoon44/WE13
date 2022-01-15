@@ -259,7 +259,7 @@ int main()
 					if (read(pollFDArray[i].fd, bufferRecv, BUFFER_SIZE) < 1)
 					{
 						delete userFDArray[i];
-						pollFDArray.fd = -1;
+						pollFDArray[i].fd = -1;
 						break;
 					}
 
