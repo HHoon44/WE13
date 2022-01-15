@@ -137,7 +137,7 @@ bool StartServer(int* currentFD)
 /// <summary>
 /// => 메세지를 체크하는 메서드
 /// </summary>
-void CheckMessage(char receive[], int lenght)
+void CheckMessage(char receive[], int length)
 {
 	// -> 받은 메세지의 0번칸은 메세지의 타입을 정의합니다!
 	// -> 물론 나중에 255개의 메세지 타입이 부족하다라고 생각하신 경우에는
@@ -146,19 +146,27 @@ void CheckMessage(char receive[], int lenght)
 	{
 	case Chat:
 		// -> 맨 앞 1바이트는 메세지 구분용이니까!
-		char* value = new char[lenght - 1];
+		char* value = new char[length - 1];
 
 		// -> 맨 앞 1바이트는 메세지 구분용!
 		// -> 메세지를 복사합니다!
-		memcpy(value, receive + 1, lenght - 1);
+		memcpy(value, receive + 1, length - 1);
 
 		// -> 이 아래쪽은 받는 버퍼의 내용을 가져왔을 때에만 여기 있겠죠!
 		cout << value << endl;
+
+		for (int i = 0; i < USER_MAXIMUM; i++)
+		{
+			// -> 유저가 있음!
+			if (pollFDArray[i].fd != -1)
+			{
+				// -> 유저에게 채팅 내용을 전달해주기!
+				write(pollFDArray[i].fd, receive, length);
+			}
+		}
 		break;
 	}
 }
-
-
 
 int main()
 {
