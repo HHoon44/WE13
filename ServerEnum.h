@@ -16,7 +16,7 @@
 
 typedef enum MessageType : char
 {
-	Chat = 1
+	Chat = 97
 }MessageType;
 
 #endif
