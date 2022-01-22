@@ -3,7 +3,7 @@
 // 저희 내부 네트워크에도 IP를 알려줘야한다
 // 내부 IP를 적으시면 됩니다
 //#define SERVER_IP "10.178.0.3"
-#define SERVER_IP "10.178.0.3"
+#define SERVER_IP "34.64.90.238"
 // 동적포트를 사용해보록 합시다
 //#define SERVER_PORT 51234
 #define SERVER_PORT 61255
