@@ -2,9 +2,11 @@
 // 서버에서는 IP가 았가 머룐압니다
 // 저희 내부 네트워크에도 IP를 알려줘야한다
 // 내부 IP를 적으시면 됩니다
-#define SERVER_IP "10.178.0.3"
+//#define SERVER_IP "10.178.0.3"
+#define SERVER_IP "34.64.90.238"
 // 동적포트를 사용해보록 합시다
-#define SERVER_PORT 51234
+//#define SERVER_PORT 51234
+#define SERVER_PORT 61255
 // 너무 많은 양의 전송을 하면 성능상도 그렇고 
 // 물리적인 네트워크 기기여도 한계가 있기 때문에
 // 버퍼(임시저장소)사이즈는 제한을 걸어줄게요
