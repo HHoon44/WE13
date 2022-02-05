@@ -341,16 +341,16 @@ int main()
 
 						for (int k = 0; k < 4; k++)
 						{
-							message[k + 1] = intChanger[k];
+							message[k + 1] = intChanger.charArray[k];
 						}
 
 						// -> 새로운 유저가 도착했다고 알려주기!
 						for (int j = 1; j < USER_MAXIMUM; j++)
 						{
 							// -> 유저가 있어야 전달을 하지~
-							if (pollFDArray[j] != -1)
+							if (pollFDArray[j].fd != -1)
 							{
-								write(pollFDArray[j], , message, 5);
+								write(pollFDArray[j].fd, , message, 5);
 							}
 						}
 
@@ -419,7 +419,7 @@ int main()
 					// -> 숫자나 그런 쉽게 눈에 보이지 않는 내용을 처리할 때에는
 					// -> 조금더 복잡한 과정을 거칠 거거든요!
 					// -> 그래서 아예  함수로 돌려주도록 할게요!
-					CheckMessage(buffRecv, BUFF_SIZE);
+					CheckMessage(i, buffRecv, BUFF_SIZE);
 
 					break;
 				}
