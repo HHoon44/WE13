@@ -52,6 +52,11 @@ using namespace std;
 // ===전방선언=== //
 // ===전방선언=== //
 
+// ===전역변수 선언란=== //
+struct pollfd pollFDArray[USER_MAXIMUM];		// -> 
+class UserData* userFDArray[USER_MAXIMUM];		// -> 유저
+// ===전역변수 선언란=== //
+
 // -> 유니언
 // -> float는 4바이트죠! char[4]도 4바이트!
 // -> 저 두 개를 같은 메모리에서 활용하게 합니다!
@@ -117,7 +122,7 @@ public:
 
 		// -> 현재 메시지를 전달해줍니다!
 		// -> write라고 하는 함수는 실패했을 때! -1을 돌려줍니다!
-		if (write(pollFDArray[FDNumber]->fd, , currentMessage, BUFF_SIZE) != -1)
+		if (write(pollFDArray[FDNumber].fd, currentMessage, BUFF_SIZE) != -1)
 		{
 			// -> -1이 아니라고 한다면! 성공했다고 볼 수 있겠죠!
 			//    보낸 데이터의 크기를 반환 받을 수 있습니다!
@@ -136,11 +141,6 @@ public:
 		cout << "유저 연결이 종료되었습니다." << endl;
 	}
 };
-
-// ===전역변수 선언란=== //
-struct pollfd pollFDArray[USER_MAXIMUM];	// -> 
-UserData* userFDArray[USER_MAXIMUM];		// -> 유저
-// ===전역변수 선언란=== //
 
 /// <summary>
 /// 서버 시작 함수
