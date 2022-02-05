@@ -352,7 +352,7 @@ int main()
 							// -> 유저가 있어야 전달을 하지~
 							if (pollFDArray[j].fd != -1)
 							{
-								write(pollFDArray[j].fd, , message, 5);
+								write(pollFDArray[j].fd, message, 5);
 							}
 						}
 
@@ -406,7 +406,7 @@ int main()
 						for (int j = 1; j < USER_MAXIMUM; j++)
 						{
 							// -> 유저가 있어야 전달을 하지~
-							if (pollFDArray[j] != -1)
+							if (pollFDArray[j].fd != -1)
 							{
 								write(pollFDArray[j].fd, message, 5);
 							}
