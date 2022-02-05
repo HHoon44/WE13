@@ -14,9 +14,12 @@
 
 #define SERVER_ENUM
 
+// -> char(1) short(2) int(4) double(8) 필요한 바이트대로 적으면 된다
 typedef enum MessageType : char
 {
 	Chat = 1,
+	Join,
+	Exit,
 	Move,
 }MessageType;
 
