@@ -288,7 +288,7 @@ int main()
 		if (StartServer(&listenFD))
 		{
 			return 0;
-		};
+		}
 
 		cout << "서버가 정상적으로 실행 되었습니다." << endl;
 
@@ -328,6 +328,9 @@ int main()
 
 					//- > 어디보자.. 자리가 있나..
 					// -> 0번은 리슨 소켓이니까! 1번부터 찾아봅시다~
+					// -> i : 새로 들어온 유저
+					// -> j : 기존의 유저
+					// -> k : 메시지 채울려고 
 					for (int i = 1; i < USER_MAXIMUM; i++)
 					{
 						if (pollFDArray[i].fd == -1)
@@ -362,15 +365,15 @@ int main()
 									userNumberMessage[0] = Join;
 
 									// -> 이미 있던 유저의 아이디를 전달해주기!
-									intChanger.intValue = j;
 
 									for (int k = 0; k < 4; k++)
 									{
+										intChanger.intValue = j;
 										userNumberMessage[k + 1] = intChanger.charArray[k];
-									}
 
-									// -> 새로 들어온 유저한테! 이 유저를 알려주기!
-									write(pollFDArray[i].fd, userNumberMessage, 5);
+										// -> 새로 들어온 유저한테! 기존의 유저들을 알려주기!
+										write(pollFDArray[i].fd, userNumberMessage, 5);
+									}
 								}
 							}
 							break;
@@ -420,7 +423,6 @@ int main()
 									write(pollFDArray[j].fd, message, 5);
 								}
 							}
-
 							break;
 						}
 
@@ -431,13 +433,38 @@ int main()
 						// -> 조금더 복잡한 과정을 거칠 거거든요!
 						// -> 그래서 아예  함수로 돌려주도록 할게요!
 						CheckMessage(i, buffRecv, BUFF_SIZE);
-
 						break;
-					}
 
+					default:
+						delete userFDArray[i];
+						pollFDArray[i].fd = -1;
+
+						char message[5];
+						message[0] = Exit;
+						intChanger.intValue = i;
+
+						for (int k = 0; k < 4; k++)
+						{
+							message[k + 1] = intChanger.charArray[k];
+						}
+
+						// -> 새로운 유저가 나갔다고 알려주기!
+						for (int j = 1; j < USER_MAXIMUM; j++)
+						{
+							// -> 유저가 있어야 전달을 하지~
+							if (pollFDArray[j].fd != -1)
+							{
+								write(pollFDArray[j].fd, message, 5);
+							}
+						}
+					}
 					// -> 버퍼를 초기화 시켜주고 가도록 합시다!
 					memset(buffRecv, 0, BUFF_SIZE);
+					memset(buffSend, 0, BUFF_SIZE);
 				}
+				// -> 버퍼에 이상한게 남으면 안되니까 버퍼를 항상 초기화
+				memset(buffRecv, 0, sizeof(buffRecv));
+				memset(buffSend, 0, sizeof(buffSend));
 			}
 		}
 	}
