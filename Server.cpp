@@ -397,7 +397,7 @@ int main()
 
 						for (int k = 0; k < 4; k++)
 						{
-							message[k + 1] = intChanger[k];
+							message[k + 1] = intChanger.charArray[k];
 						}
 
 						// -> 새로운 유저가 나갔다고 알려주기!
@@ -406,7 +406,7 @@ int main()
 							// -> 유저가 있어야 전달을 하지~
 							if (pollFDArray[j] != -1)
 							{
-								write(pollFDArray[j], message, 5);
+								write(pollFDArray[j].fd, message, 5);
 							}
 						}
 
