@@ -365,15 +365,15 @@ int main()
 									userNumberMessage[0] = Join;
 
 									// -> 이미 있던 유저의 아이디를 전달해주기!
+									intChanger.intValue = j;
 
 									for (int k = 0; k < 4; k++)
 									{
-										intChanger.intValue = j;
 										userNumberMessage[k + 1] = intChanger.charArray[k];
-
-										// -> 새로 들어온 유저한테! 기존의 유저들을 알려주기!
-										write(pollFDArray[i].fd, userNumberMessage, 5);
 									}
+
+									// -> 새로 들어온 유저한테! 기존의 유저들을 알려주기!
+									write(pollFDArray[0].fd, userNumberMessage, 5);
 								}
 							}
 							break;
@@ -457,6 +457,7 @@ int main()
 								write(pollFDArray[j].fd, message, 5);
 							}
 						}
+						break;
 					}
 					// -> 버퍼를 초기화 시켜주고 가도록 합시다!
 					memset(buffRecv, 0, BUFF_SIZE);
