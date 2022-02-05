@@ -341,31 +341,38 @@ int main()
 							message[0] = Join;
 							intChanger.intValue = i;
 
-							cout << message[0] << endl;
-
-							for (int k = 0; k < 4; k++)
-							{
-								message[k + 1] = intChanger.charArray[k];
-							}
-
-							// -> 새로운 유저가 도착했다고 알려주기!
-							for (int j = 1; j < USER_MAXIMUM; j++)
-							{
-								// -> 유저가 있어야 전달을 하지~
-								if (pollFDArray[j].fd != -1)
-								{
-									write(pollFDArray[j].fd, message, 5);
-								}
-							}
-
 							// -> 새로운 유저 정보를 생성 합니다
 							userFDArray[i] = new UserData();
 
 							// -> 너가 이 자리에 있는 거야!
 							userFDArray[i]->FDNumber = i;
 
-							// -> 유저에게 반갑다고 인사해줍시다!
-							write(pollFDArray[i].fd, "Hi!", 4);
+							// -> 새로운 유저가 도착했다고 알려주기!
+							// -> 모든 유저를 돌아서! 
+							for (int j = 1; j < USER_MAXIMUM; j++)
+							{
+								// -> 유저가 있어야 전달을 하지~
+								if (pollFDArray[j].fd != -1)
+								{
+									// -> 모든 유저들한테! 새로운 유저의 출현을 알려주기!
+									write(pollFDArray[j].fd, message, 5);
+
+									// -> 원래 유저가 있었던 것도 알려주어야 하니까!
+									char userNumberMessage[5];
+									userNumberMessage[0] = Join;
+
+									// -> 이미 있던 유저의 아이디를 전달해주기!
+									intChanger.intValue = j;
+
+									for (int k = 0; k < 4; k++)
+									{
+										userNumberMessage[k + 1] = intChanger.charArray[k];
+									}
+
+									// -> 새로 들어온 유저한테! 이 유저를 알려주기!
+									write(pollFDArray[i].fd, userNumberMessage, 5);
+								}
+							}
 							break;
 						}
 					}
