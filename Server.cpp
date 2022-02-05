@@ -373,7 +373,7 @@ int main()
 									}
 
 									// -> 새로 들어온 유저한테! 기존의 유저들을 알려주기!
-									write(pollFDArray[0].fd, userNumberMessage, 5);
+									write(pollFDArray[i].fd, userNumberMessage, 5);
 								}
 							}
 							break;
