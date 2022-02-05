@@ -339,6 +339,8 @@ int main()
 						message[0] = Join;
 						intChanger.intValue = i;
 
+						cout << message[0] << endl;
+
 						for (int k = 0; k < 4; k++)
 						{
 							message[k + 1] = intChanger.charArray[k];
