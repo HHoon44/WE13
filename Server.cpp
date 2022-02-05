@@ -47,9 +47,7 @@
 using namespace std;
 
 // ===전방선언=== //
-
 // ===전방선언=== //
-
 
 // -> 유니언
 // -> float는 4바이트죠! char[4]도 4바이트!
@@ -93,7 +91,6 @@ public:
 		cout << "유저 연결이 종료되었습니다." << endl;
 	}
 };
-
 
 // ===전역변수 선언란=== //
 struct pollfd pollFDArray[USER_MAXIMUM];	// -> 
@@ -459,13 +456,15 @@ int main()
 						}
 						break;
 					}
+
 					// -> 버퍼를 초기화 시켜주고 가도록 합시다!
-					memset(buffRecv, 0, BUFF_SIZE);
-					memset(buffSend, 0, BUFF_SIZE);
+					//memset(buffRecv, 0, BUFF_SIZE);
+					//memset(buffSend, 0, BUFF_SIZE);
 				}
+
 				// -> 버퍼에 이상한게 남으면 안되니까 버퍼를 항상 초기화
-				memset(buffRecv, 0, sizeof(buffRecv));
-				memset(buffSend, 0, sizeof(buffSend));
+				//memset(buffRecv, 0, sizeof(buffRecv));
+				//memset(buffSend, 0, sizeof(buffSend));
 			}
 		}
 	}
