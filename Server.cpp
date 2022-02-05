@@ -406,7 +406,7 @@ int main()
 							// -> 유저가 있어야 전달을 하지~
 							if (pollFDArray[j] != -1)
 							{
-								write(pollFDArray[j], , message, 5);
+								write(pollFDArray[j], message, 5);
 							}
 						}
 
