@@ -568,7 +568,7 @@ int main()
 						for (int j = 1; j < USER_MAXIMUM; j++)
 						{
 							// -> 유저가 있어야 전달을 하지~
-							if (userFDArray[j] != nullptr)
+							if (i != j && userFDArray[j] != nullptr)
 							{
 								char* currentUserMessage = new char[5];
 								memcpy(currentUserMessage, message, 5);
@@ -614,7 +614,7 @@ void* MessageSendThread(void* args)
 		for (int i = 1; i < USER_MAXIMUM; i++)
 		{
 			// -> 유저가 있으면 전달 시도!
-			if (pollFDArray[i].fd >= 0 && userFDArray[i] != nullptr)
+			if (pollFDArray[i].fd > 0 && userFDArray[i] != nullptr)
 			{
 				memset(buffSend, 0, BUFF_SIZE);
 
