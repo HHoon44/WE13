@@ -401,10 +401,14 @@ int main()
 					{
 						if (pollFDArray[i].fd == -1)
 						{
+							cout << "2" << endl;
+
 							// -> 자리가 있다!
 							pollFDArray[i].fd = connetFD;
 							pollFDArray[i].events = POLLIN;
 							pollFDArray[i].revents = 0;
+
+							cout << "3" << endl;
 
 							char message[5];
 							message[0] = Join;
@@ -415,6 +419,8 @@ int main()
 							{
 								message[k + 1] = intChanger.charArray[k];
 							}
+
+							cout << "4" << endl;
 
 							// -> 새로운 유저 정보를 생성 합니다
 							userFDArray[i] = new UserData();
