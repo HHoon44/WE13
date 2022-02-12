@@ -163,7 +163,7 @@ public:
 			messageQueue->pop();
 		}
 
-		//delete messageQueue;
+		delete messageQueue;
 		cout << "유저 연결이 종료되었습니다." << endl;
 	}
 };
@@ -584,7 +584,7 @@ void* MessageSendThread(void* args)
 		for (int i = 1; i < USER_MAXIMUM; i++)
 		{
 			// -> 유저가 있으면 전달 시도!
-			if (userFDArray[i] != nullptr)
+			if (pollFDArray >= 0 && userFDArray[i] != nullptr)
 			{
 				memset(buffSend, 0, BUFF_SIZE);
 
