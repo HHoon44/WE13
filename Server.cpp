@@ -410,6 +410,11 @@ int main()
 							message[0] = Join;
 							intChanger.intValue = i;
 
+							for (int k = 0; i < 4; k++)
+							{
+								message[k  1] = intChanger.charArray[k];
+							}
+
 							// -> 새로운 유저 정보를 생성 합니다
 							userFDArray[i] = new UserData();
 
@@ -423,6 +428,10 @@ int main()
 								// -> 유저가 있어야 전달을 하지~
 								if (pollFDArray[j].fd != -1)
 								{
+									// -> 새로운 유저의 메시지를 복사하기!
+									char* currentUserMessage = new char[5];
+									memcpy(currentUserMessage, message, 5);
+
 									// -> 모든 유저들한테! 새로운 유저의 출현을 알려주기!
 									write(pollFDArray[j].fd, message, 5);
 
