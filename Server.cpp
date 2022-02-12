@@ -51,7 +51,7 @@
 using namespace std;
 
 // ===전방선언=== //
-void MessageSnedThread(void* args);
+void MessageSendThread(void* args);
 // ===전방선언=== //
 
 // ===전역변수 선언란=== //
