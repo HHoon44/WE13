@@ -570,7 +570,7 @@ int main()
 						for (int j = 1; j < USER_MAXIMUM; j++)
 						{
 							// -> 유저가 있어야 전달을 하지~
-							if (i != j && userFDArray[j] != nullptr)
+							if (i != j && pollFDArray[j].fd != -1 && userFDArray[j] != nullptr)
 							{
 								char* currentUserMessage = new char[5];
 								memcpy(currentUserMessage, message, 5);
