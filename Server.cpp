@@ -401,20 +401,14 @@ int main()
 					{
 						if (pollFDArray[i].fd == -1)
 						{
-							cout << "2" << endl;
-
 							// -> 자리가 있다!
 							pollFDArray[i].fd = connetFD;
 							pollFDArray[i].events = POLLIN;
 							pollFDArray[i].revents = 0;
 
-							cout << "3" << endl;
-
 							char message[5];
 							message[0] = Join;
 							intChanger.intValue = i;
-
-							cout << "4" << endl;
 
 							// -> 메시지 뒷부분을 int 바이트로 채우는 작업!
 							for (int k = 0; k < 4; k++)
@@ -500,10 +494,14 @@ int main()
 							// -> 새로운 유저가 나갔다고 알려주기!
 							for (int j = 1; j < USER_MAXIMUM; j++)
 							{
+								char currentUserMessage[5];
+
+								memcpy(currentUserMessage, message, 5);
+
 								// -> 유저가 있어야 전달을 하지~
-								if (pollFDArray[j].fd != -1)
+								if (userFDArray[j] != nullptr)
 								{
-									write(pollFDArray[j].fd, message, 5);
+									userFDArray[j]->MessageQueueing(currentUserMessage);
 								}
 							}
 							break;
@@ -534,10 +532,14 @@ int main()
 						// -> 새로운 유저가 나갔다고 알려주기!
 						for (int j = 1; j < USER_MAXIMUM; j++)
 						{
+							char currentUserMessage[5];
+
+							memcpy(currentUserMessage, message, 5);
+
 							// -> 유저가 있어야 전달을 하지~
-							if (pollFDArray[j].fd != -1)
+							if (userFDArray[j] != nullptr)
 							{
-								write(pollFDArray[j].fd, message, 5);
+								userFDArray[j]->MessageQueueing(currentUserMessage);
 							}
 						}
 						break;
