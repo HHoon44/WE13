@@ -347,7 +347,6 @@ int main()
 
 		// -> pollFDArray가 제가 연락을 기다리고 있는 애들이에요
 		// -> 그러다 보니까! 일단 처음에는 연락해줄 애가 없다는 것은 확인해야겠죠!
-
 		for (int i = 0; i < USER_MAXIMUM; i++)
 		{
 			// -> -1이 없다는 뜻!
@@ -362,10 +361,10 @@ int main()
 		pollFDArray[0].revents = 0;
 
 		// -> 실제로 스레드를 실행시켜놓고 가도록 할게요!
-		pthread_t* senderThread = nullptr;
+		pthread_t senderThread = nullptr;
 
 		// -> 스레드를 실제로 실행하는 부분!
-		if (pthread_create(senderThread, nullptr, MessageSendThread, nullptr))
+		if (pthread_create(&senderThread, nullptr, MessageSendThread, nullptr))
 		{
 			// -> 스레드를 정상적으로 만들었을 때에는 0을 반환합니다!
 			// -> 그래서 여기는 사실 실패한 곳이에요...
@@ -534,7 +533,8 @@ int main()
 			}
 		}
 		// -> 다 끝나고 나서는 스레드를 종료해주셔야겠죠!
-		pthread_cancel(*senderThread);
+		// -> 생성한 스레드를 종료하는데! 끝날 때까지 기다려줘요!
+		pthread_join(senderThread, nullptr);
 	}
 	catch (exception& e)
 	{
@@ -555,11 +555,11 @@ void* MessageSendThread(void* args)
 	// -> 메시지는 무한히 보내줘야해요!
 	for (;;)
 	{
-		/// -> 여기 이해 안감
 		// -> poll이라고 하는 녀석은! 연락이 올 때까지 기다립니다!
 		// -> 그래서 이 위쪽에 있는 반복문도 돌아가지 않는 것이죠!
 		// -> 그래서 이 작은 반복문을 무한반복시켜주는 작은 스레드가 있으면 좋겟어요!
 		// -> 스레드란 컴퓨터가 프로그램을 돌릴 때 돌아가는 하나의 라인이라고 보시면 됩니다!
+		// -> 큐 때문에 있는거임
 		for (int i = 1; i < USER_MAXIMUM; i++)
 		{
 			if (pollFDArray[i].fd >= 0)
