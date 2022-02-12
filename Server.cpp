@@ -562,7 +562,8 @@ void* MessageSendThread(void* args)
 		// -> 큐 때문에 있는거임
 		for (int i = 1; i < USER_MAXIMUM; i++)
 		{
-			if (pollFDArray[i].fd >= 0)
+			// -> 유저가 있으면 전달 시도!
+			if (userFDArray[i] != nullptr)
 			{
 				memset(buffSend, 0, BUFF_SIZE);
 
