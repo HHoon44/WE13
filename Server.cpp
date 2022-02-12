@@ -414,13 +414,14 @@ int main()
 							message[0] = Join;
 							intChanger.intValue = i;
 
+							cout << "4" << endl;
+
 							/// 여기 뭐임?
 							for (int k = 0; i < 4; k++)
 							{
 								message[k + 1] = intChanger.charArray[k];
 							}
 
-							cout << "4" << endl;
 
 							// -> 새로운 유저 정보를 생성 합니다
 							userFDArray[i] = new UserData();
