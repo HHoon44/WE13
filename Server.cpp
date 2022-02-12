@@ -412,7 +412,7 @@ int main()
 
 							for (int k = 0; i < 4; k++)
 							{
-								message[k  1] = intChanger.charArray[k];
+								message[k + 1] = intChanger.charArray[k];
 							}
 
 							// -> 새로운 유저 정보를 생성 합니다
