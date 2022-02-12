@@ -51,6 +51,7 @@
 using namespace std;
 
 // ===전방선언=== //
+void MessageSnedThread(void* args);
 // ===전방선언=== //
 
 // ===전역변수 선언란=== //
@@ -527,7 +528,7 @@ int main()
 			}
 		}
 		// -> 다 끝나고 나서는 스레드를 종료해주셔야겠죠!
-		pthread_cancel(&senderThread);
+		pthread_cancel(*senderThread);
 	}
 	catch (exception& e)
 	{
@@ -540,8 +541,10 @@ int main()
 
 /// <summary>
 /// => 메시지를 보내주는 하나의 스레드!
+/// => 저희가 사실 Main함수 같은걸 만들 때에도 운영체제에서 정보들을 줍니다!
+/// => 그래서 그걸 void*에다가 받아주도록 할게요!
 /// </summary>
-void MessageSendThread()
+void MessageSendThread(void* args)
 {
 	for (;;)
 	{
