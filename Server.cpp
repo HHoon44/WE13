@@ -425,11 +425,13 @@ int main()
 					// -> 들어 오세요
 					connetFD = accept(listenFD, (struct sockaddr*)&connectSocket, &addressSize);
 
-					//- > 어디보자.. 자리가 있나..
-					// -> 0번은 리슨 소켓이니까! 1번부터 찾아봅시다~
-					// -> i : 새로 들어온 유저
-					// -> j : 기존의 유저
-					// -> k : 메시지 채울려고 
+					/*
+					*	어디보자.. 자리가 있나..
+					*	0번은 리슨 소켓이니까! 1번부터 찾아봅시다~
+					*	i : 새로 들어온 유저
+					*	j : 기존의 유저
+					*	k : 메시지 채울려고 
+					*/
 					for (int i = 1; i < USER_MAXIMUM; i++)
 					{
 						if (pollFDArray[i].fd == -1)
@@ -498,13 +500,13 @@ int main()
 					// -> 이녀석이 저한테 무슨 내용을 전달을 해줬는지 보러갑시다!
 					switch (pollFDArray[i].revents)
 					{
-						// -> 암말도 안했어요! 그러면 무시!
 					case 0:
+						// -> 암말도 안했어요! 그러면 무시!
 						break;
 
-						// -> 뭔가 말을 할 때!
 					case POLLIN:
 						/*
+						*	뭔가 말을 할 때!
 						*	보낼 때는 write였는데 받아올 때에는 read가 되겠죠!
 						*	받는 용도의 버퍼를 사용해서 읽어주도록 합시다!
 						*	버퍼를 읽어봤는데.. 세상에나! 아무것도 들어있지 않아요!
@@ -530,7 +532,7 @@ int main()
 							for (int j = 1; j < USER_MAXIMUM; j++)
 							{
 								// -> 유저가 있어야 전달을 하지~
-								if (i != j && userFDArray[j] != nullptr)
+								if (i != j && pollFDArray[j].fd != -1 && userFDArray[j] != nullptr)
 								{
 									char* currentUserMessage = new char[5];
 									memcpy(currentUserMessage, message, 5);
