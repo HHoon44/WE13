@@ -616,9 +616,6 @@ void* MessageSendThread(void* args)
 			// -> 유저가 있으면 전달 시도!
 			if (pollFDArray[i].fd > 0 && userFDArray[i] != nullptr)
 			{
-				memset(buffSend, 0, BUFF_SIZE);
-
-				// -> 지금 가지고 있는 내용을 보내준다
 				userFDArray[i]->MessageSend();
 			}
 		}
