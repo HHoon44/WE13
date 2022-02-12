@@ -278,7 +278,7 @@ void CheckMessage(int userNumber, char receive[], int length)
 				if (userFDArray[i] != nullptr)
 				{
 					char* currentMessage = new char[length];
-					memcpy(currentMessage, value, length);
+					memcpy(currentMessage, receive, length);
 
 					// -> 유저에게 채팅 내용을 전달해주기!
 					userFDArray[i]->MessageQueueing(currentMessage);
@@ -351,7 +351,7 @@ int main()
 			보통은 소켓이 닫혀있습니다. 무엇을 받는 무시하는 거에요 ( 열리게 되는 조건이 있어요 )
 			제가 이미 그 주소로 메세지를 보냈다면! 소켓이 받아줘요!
 			소켓을 열어주는 소켓이 필요한 거에요 소켓 하나를 [ 리슨 소켓 ]으로 만듭니다
-			"접속 요청"만 받아주는 소켓을 여는 거에요! 
+			"접속 요청"만 받아주는 소켓을 여는 거에요!
 			누가 접속 요청을 한다면! 비어있는 소켓 하나를 찾아요 그래서 개랑 연결시켜주는 하나의 창구가 되는거에요
 		*/
 
