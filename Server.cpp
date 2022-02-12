@@ -360,6 +360,8 @@ int main()
 			{
 				if (pollFDArray[i].fd >= 0)
 				{
+					memset(buffSend, 0, BUFF_SIZE);
+
 					// -> 지금 가지고 있는 내용을 보내준다
 					userFDArray[i]->MessageSend();
 				}
