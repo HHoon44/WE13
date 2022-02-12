@@ -352,8 +352,12 @@ void CheckMessage(int userNumber, char receive[], int length)
 				// -> 유저가 있음!
 				if (pollFDArray[i].fd != -1 && userFDArray[i] != nullptr)
 				{
+					char* currentUserMessage = new char[14];
+
+					memcpy(currentUserMessage, currentMessage, 14);
+
 					// -> 유저에게 이동 내용을 전달해주기!
-					userFDArray[i]->MessageQueueing(currentMessage);
+					userFDArray[i]->MessageQueueing(currentUserMessage);
 					//write(pollFDArray[i].fd, receive, length - 1);
 				}
 			}
