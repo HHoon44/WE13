@@ -112,6 +112,11 @@ public:
 
 	void MessageQueueing(char* wantMessage)
 	{
+		if (messageQueue == nullptr)
+		{
+			return;
+		}
+
 		// -> 원하는 메세지를 유저한테 전달!
 		//	  즉시 전달을 하는 것이 아니에요!
 		//	  다음 틱레이트에 도착했을 때! 아! 보내면 되는구나! 라고 생각해서!
@@ -133,6 +138,18 @@ public:
 		// -> 줄에서 일단은 가져오기만 했어요!
 		// -> 줄에서 빼내주지 않았다..?
 		char* currentMessage = messageQueue->front();
+
+		// -> 메시지 큐에서 뭔가 들어온 것을 확인했는데! 이녀석 아무것도 없는데?
+		if (currentMessage == nullptr)
+		{
+			return;
+		}
+
+		// -> pollFD가 뭔가 잘못 들어와 있을 때
+		if (FDNumber < 0 || pollFDArray[FDNumber].fd <= 1)
+		{
+			return;
+		}
 
 		// -> 현재 메시지를 전달해줍니다!
 		// -> write라고 하는 함수는 실패했을 때! -1을 돌려줍니다!
