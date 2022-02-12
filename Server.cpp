@@ -416,12 +416,11 @@ int main()
 
 							cout << "4" << endl;
 
-							/// 여기 뭐임?
-							for (int k = 0; i < 4; k++)
+							// -> 메시지 뒷부분을 int 바이트로 채우는 작업!
+							for (int k = 0; k < 4; k++)
 							{
 								message[k + 1] = intChanger.charArray[k];
 							}
-
 
 							// -> 새로운 유저 정보를 생성 합니다
 							userFDArray[i] = new UserData();
@@ -460,8 +459,6 @@ int main()
 									userFDArray[i]->MessageQueueing(userNumberMessage);
 								}
 							}
-							// -> 에이 그래도 한번은 받겠지...
-							userFDArray[i]->MessageSend();
 							break;
 						}
 					}
