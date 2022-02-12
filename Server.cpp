@@ -150,8 +150,8 @@ public:
 
 	UserData()
 	{
-		messageQueue = new queue<char*>();
 		cout << "유저 데이터가 생성되었습니다." << endl;
+		messageQueue = new queue<char*>();
 	};
 
 	~UserData()
