@@ -494,12 +494,11 @@ int main()
 							// -> 새로운 유저가 나갔다고 알려주기!
 							for (int j = 1; j < USER_MAXIMUM; j++)
 							{
-								char* currentUserMessage = new char[5];
-								memcpy(currentUserMessage, message, 5);
-
 								// -> 유저가 있어야 전달을 하지~
 								if (userFDArray[j] != nullptr)
 								{
+									char* currentUserMessage = new char[5];
+									memcpy(currentUserMessage, message, 5);
 									userFDArray[j]->MessageQueueing(currentUserMessage);
 								}
 							}
@@ -531,12 +530,11 @@ int main()
 						// -> 새로운 유저가 나갔다고 알려주기!
 						for (int j = 1; j < USER_MAXIMUM; j++)
 						{
-							char* currentUserMessage = new char[5];
-							memcpy(currentUserMessage, message, 5);
-
 							// -> 유저가 있어야 전달을 하지~
 							if (userFDArray[j] != nullptr)
 							{
+								char* currentUserMessage = new char[5];
+								memcpy(currentUserMessage, message, 5);
 								userFDArray[j]->MessageQueueing(currentUserMessage);
 							}
 						}
