@@ -52,5 +52,5 @@ bool MySQLInitialize()
 /// </summary>
 void MySQLClose()
 {
-	mysql_close(connectedDatabase)
+	mysql_close(connectedDatabase);
 }
