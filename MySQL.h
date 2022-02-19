@@ -81,11 +81,11 @@ void SaveUser(string id, string color)
 
 	// -> 쿼리에 ID, COLOR추가해주기!
 	query += id;
-	query += ', ';
+	query += ", ";
 	query += color;
 	query += ");"
 
-	if (mysql_query(connectedDatabase, query) != 0)
+	if (mysql_query(connectedDatabase, query.c_str()) != 0)
 	{
 		cout << "Cannot Save Data" << endl;
 		return false;
