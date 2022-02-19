@@ -21,6 +21,8 @@ typedef enum MessageType : char
 	Join,
 	Exit,
 	Move,
+	Login,
+	Logout,
 }MessageType;
 
 #endif

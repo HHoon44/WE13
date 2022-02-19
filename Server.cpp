@@ -121,6 +121,43 @@ public:
 	// -> 위치 X, Y, Z를 넣어주기!
 	float locationX, locationY, locationZ;
 
+	// -> 로그인 되었는지?
+	bool isLogin = false;
+
+	string currentID;
+	string color;
+
+	void TryLogin(string ID, string PW)
+	{
+		if (isLogin)
+		{
+			// -> 이미 로그인 되어있다면
+			return;
+		}
+
+		if (LoadUser(ID))
+		{
+			// -> 예를 들어가서! 비번이 두 번째 칸이었다고 한다면!
+			if (queryRow[1] == PW)
+			{
+				// -> 로그인 성공!
+				isLogin = true;
+				currentID = ID;
+
+				// -> 정보 가져오기!
+				color = GetColor(ID);
+			}
+		}
+	}
+
+	void TryLogout()
+	{
+		if (isLogin)
+		{
+			SaveUser(currentID, color);
+		}
+	}
+
 	void MessageQueueing(char* wantMessage)
 	{
 		if (messageQueue == nullptr)
@@ -424,8 +461,8 @@ int main()
 			return -4;
 		}
 
-		SaveUser("Test", "W");
-		cout << GetColor("Test") << endl;
+		//SaveUser("Test", "W");
+		//cout << GetColor("Test") << endl;
 
 		// -> 서버 시작
 		// -> 실패하면 그대로 프로그램을 종료합시다

@@ -164,6 +164,26 @@ string GetColor(string id)
 	return "B";
 }
 
+/*
+UserInfo GetInfo(string id)
+{
+	// -> 나중에는 하나하나 불러오기보다는! 구조체를 만드셔가지구 한 번에 떠올 수 있게
+	//	  준비하시는 것도 추천드립니다!
+
+	UserInfo result;
+
+	if (LoadUser(id))
+	{
+		result.characterClass = queryRow[3];
+		// -> LoadUser를 하면! queryRow에 정보가 담깁니다!
+		// -> queryRow[0]는 ID겠죠!
+		return result;
+	}
+
+	return "B";
+}
+*/
+
 /// <summary>
 /// => 테이블에서 유저를 삭제
 /// </summary>
