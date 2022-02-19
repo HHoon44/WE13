@@ -28,22 +28,22 @@ bool MySQLInitialize()
 	if (!(connectedDatabase = mysql_init((MYSQL*)nullptr)))
 	{
 		// -> 초기화가 안되었다면
-		cout << "MySQL 초기화에 실패하였습니다!" << endl;
+		cout << "Cannot Initialize MySQL" << endl;
 		return false;
 	}
 
-	cout << "성공적으로 MySQL을 초기화했습니다!" << endl;
+	cout << "MySQL successfully Initialized" << endl;
 
 	// -> 초기화를 한 뒤에 MySQL에 연결을 시도한다
 	// -> 파라미터로는 "MySQL을 저장할 위치", "MySQL의 주소", "ID", "비밀번호", "nullptr", "포트번호"
 	if (!mysql_real_connect(connectedDatabase, "localhost", "root", "dursocjd6634", nullptr, 3306, nullptr, 0))
 	{
 		// -> 연결을 실패했다면
-		cout << "MySQL 연결에 실패하였습니다!" << endl;
+		cout << "Failed to Connect MySQL" << endl;
 		return false;
 	}
 
-	cout << "성공적으로 MySQL에 연결했습니다!" << endl;
+	cout << "successfully connected to MySQL" << endl;
 	return true;
 }
 
