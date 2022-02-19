@@ -8,8 +8,8 @@ using namespace std;
 // -> 연결된 MYSQL을 저장을 해두죠!
 MYSQL* connectedDatabase;
 
-// -> Result! 데이터베이스에 "쿼리"를 한다고 해요!
-// -> "쿼리"? 는 무엇이냐! "쿼리"는 특정 데이터를 긁어오는 행위!
+// -> Result! 데이터베이스에 "쿼리" 를 한다고 해요!
+// -> "쿼리"? 는 무엇이냐! "쿼리" 는 특정 데이터를 긁어오는 행위!
 // -> 긁어온 데이터에 대한 내용 결과물! 이 여기에 들어온다고 보시면 돼요!
 MYSQL_RES* queryResult;
 
@@ -67,10 +67,31 @@ void MySQLClose()
 	mysql_close(connectedDatabase);
 }
 
+
 /// <summary>
 /// => 유저 정보를 저장
 /// </summary>
-void SaveUser()
+/// <param name="id"> 유저의 아이디 </param>
+/// <param name="color"> 유저의 색상 </param>
+void SaveUser(char* id, char* color)
 {
+	// -> INSERT INTO UserData (ID, COLOR) VALUES (id, color);
 
+	char* query = "INSERT INTO UserData (ID, COLOR) VALUES (";
+
+	// -> 쿼리에 ID추가해주기!
+	strcat(query, id);
+	strcat(query, ', ');
+
+	// -> 쿼리에 Color추가해주기!
+	strcat(query, color);
+	strcat(query, ");");
+
+	if (mysql_query(connectedDatabase, query) != 0)
+	{
+		cout << "Cannot Save Data" << endl;
+		return false;
+	}
+
+	cout << "Save Success" << endl;
 }
