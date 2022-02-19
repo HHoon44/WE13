@@ -83,7 +83,7 @@ void SaveUser(string id, string color)
 	query += id;
 	query += "\", \"";
 		query += color;
-	query += "\"); ";
+	query += "\");";
 
 	if (mysql_query(connectedDatabase, query.c_str()) != 0)
 	{
