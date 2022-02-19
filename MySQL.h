@@ -77,7 +77,7 @@ void SaveUser(const char* id, const char* color)
 {
 	// -> INSERT INTO UserData (ID, COLOR) VALUES (id, color);
 
-	char* query = "INSERT INTO UserData (ID, COLOR) VALUES (";
+	const char* query = "INSERT INTO UserData (ID, COLOR) VALUES (";
 
 	// -> 쿼리에 ID추가해주기!
 	strcat(query, id);
