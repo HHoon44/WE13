@@ -115,6 +115,7 @@ void SaveUser(string id, string color)
 		// -> 유저가 이미 있다면 값만 업데이트
 
 		// -> UPDATE UserData SET COLOR = "color" WHERE ID = "id";
+		// -> UPDATE UserData SET COLOR = "color", INI = "a" WHERE ID = "id";
 		query = "UPDATE ";
 		query += targetTable;
 		query += " SET COLOR=\"";
@@ -128,6 +129,7 @@ void SaveUser(string id, string color)
 		// -> 유저가 없다면 새로 추가
 
 		// -> INSERT INTO UserData (ID, COLOR) VALUES ("id", "color");
+		// -> INSERT INTO UserData (ID, COLOR, INI) VALUES ("id", "color", "a");
 		query = "INSERT INTO ";
 		query += targetTable;
 		query += "(ID, COLOR) VALUES(\"";
