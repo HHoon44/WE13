@@ -47,7 +47,7 @@ bool MySQLInitialize()
 
 	// -> mysql에 질의문을 던집니다! 
 	// -> 질의문을 문자열 안족에 넣으시면 됩니다! (ServerData == 데이터베이스)
-	if (mysql_query(connectedDatabase, "USE ServerData") != 0)
+	if (mysql_query(connectedDatabase, "USE ServerData;") != 0)
 	{
 		// -> 데이터 베이스가 유효하지 않다
 		cout << "Database is Invalid" << endl;
