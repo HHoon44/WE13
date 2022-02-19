@@ -28,7 +28,9 @@
 // 클라이언트 같은 경우는 144프레임으로 하시는 분들 굉장히 많이 있습니다
 #define TICK_RATE 16
 
+#include <string>
 #include <iostream>
+
 // 클라이언트가 직접 주소와 포트를 이용해서 들어오라고 소켓을 사용할 거에요
 #include <sys/socket.h>
 
@@ -386,7 +388,6 @@ int main()
 {
 	try
 	{
-
 		/*
 		*	소켓들은 전부 int로 관리 될 거에요
 			함수를 통해서 접근 할 거니까 너무 걱정하실 필요 없어요

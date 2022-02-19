@@ -73,19 +73,17 @@ void MySQLClose()
 /// </summary>
 /// <param name="id"> 유저의 아이디 </param>
 /// <param name="color"> 유저의 색상 </param>
-void SaveUser(const char* id, const char* color)
+void SaveUser(string id, string color)
 {
 	// -> INSERT INTO UserData (ID, COLOR) VALUES (id, color);
 
-	const char* query = "INSERT INTO UserData (ID, COLOR) VALUES (";
+	string query = "INSERT INTO UserData (ID, COLOR) VALUES (";
 
-	// -> 쿼리에 ID추가해주기!
-	strcat(query, id);
-	strcat(query, ', ');
-
-	// -> 쿼리에 Color추가해주기!
-	strcat(query, color);
-	strcat(query, ");");
+	// -> 쿼리에 ID, COLOR추가해주기!
+	query += id;
+	query += ', ';
+	query += color;
+	query += ");"
 
 	if (mysql_query(connectedDatabase, query) != 0)
 	{
