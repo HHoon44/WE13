@@ -32,7 +32,7 @@ bool MySQLInitialize()
 		return false;
 	}
 
-	cout << "MySQL successfully Initialized" << endl;
+	cout << "MySQL Successfully Initialized" << endl;
 
 	// -> 초기화를 한 뒤에 MySQL에 연결을 시도한다
 	// -> 파라미터로는 "MySQL을 저장할 위치", "MySQL의 주소", "ID", "비밀번호", "nullptr", "포트번호"
@@ -43,7 +43,7 @@ bool MySQLInitialize()
 		return false;
 	}
 
-	cout << "successfully connected to MySQL" << endl;
+	cout << "Successfully connected to MySQL" << endl;
 	return true;
 }
 
