@@ -73,7 +73,7 @@ void MySQLClose()
 /// </summary>
 /// <param name="id"> 유저의 아이디 </param>
 /// <param name="color"> 유저의 색상 </param>
-void SaveUser(char* id, char* color)
+void SaveUser(const char* id, const char* color)
 {
 	// -> INSERT INTO UserData (ID, COLOR) VALUES (id, color);
 
