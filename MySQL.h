@@ -81,7 +81,7 @@ void SaveUser(string id, string color)
 
 	// -> 쿼리에 ID, COLOR추가해주기!
 	query += id;
-	query += "\", "\";
+	query += "\", \";
 		query += color;
 	query += "\"); ";
 
