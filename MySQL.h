@@ -77,12 +77,12 @@ void SaveUser(string id, string color)
 {
 	// -> INSERT INTO UserData (ID, COLOR) VALUES (id, color);
 
-	string query = "INSERT INTO UserData (ID, COLOR) VALUES (";
+	string query = "INSERT INTO UserData (ID, COLOR) VALUES (\"";
 
 	// -> 쿼리에 ID, COLOR추가해주기!
 	query += id;
 	query += "\", \"";
-		query += color;
+	query += color;
 	query += "\");";
 
 	if (mysql_query(connectedDatabase, query.c_str()) != 0)
