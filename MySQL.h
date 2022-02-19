@@ -54,6 +54,8 @@ bool MySQLInitialize()
 		return false;
 	}
 
+	cout << "Database has Open" << endl;
+
 	return true;
 }
 
