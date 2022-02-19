@@ -425,6 +425,7 @@ int main()
 		}
 
 		SaveUser("Test", "W");
+		cout << GetColor("Test") << endl;
 
 		// -> 서버 시작
 		// -> 실패하면 그대로 프로그램을 종료합시다

@@ -148,3 +148,36 @@ void SaveUser(string id, string color)
 
 	cout << "Save Success" << endl;
 }
+
+string GetColor(string id)
+{
+	// -> 나중에는 하나하나 불러오기보다는! 구조체를 만드셔가지구 한 번에 떠올 수 있게
+	//	  준비하시는 것도 추천드립니다!
+
+	if (LoadUser(id))
+	{
+		// -> LoadUser를 하면! queryRow에 정보가 담깁니다!
+		// -> queryRow[0]는 ID겠죠!
+		return queryRow[1];
+	}
+
+	return "B";
+}
+
+/// <summary>
+/// => 테이블에서 유저를 삭제
+/// </summary>
+/// <param name="id"> 삭제할 유저 ID </param>
+void DeleteUser(string id)
+{
+	if (LoadUser(id))
+	{
+		// -> 해당 ID가 있는 줄을 지워버리겠다!
+		// -> DELETE FROM UserData WHERE ID = "id";
+		string query = "DELETE FROM ";
+		query += targetTable;
+		query += "WHERE ID = \"";
+		query += id;
+		query += "\";";
+	}
+}
