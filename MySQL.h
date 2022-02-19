@@ -18,6 +18,9 @@ MYSQL_RES* queryResult;
 // -> 받아온 "줄 형식" 데이터를 여기에 넣어놓겠습니다!
 MYSQL_ROW queryRow;
 
+// -> 나중에 테이블명 바꾸면 여기서도 바꿔주세요!
+string targetTable = "UserData";
+
 /// <summary>
 /// => 연결
 /// </summary>
@@ -67,6 +70,35 @@ void MySQLClose()
 	mysql_close(connectedDatabase);
 }
 
+/// <summary>
+/// => 중복된 유저가 있는지 확인
+/// </summary>
+/// <param name="id"> 유저의 아이디 </param>
+/// <returns></returns>
+bool LoadUser(string id)
+{
+	// -> 유저 데이터에서 아이디가 일치하는 녀석의 줄을 가져옵니다
+	// -> SELECT * FROM UserData WHERE ID = 'id';
+	string query = "SELECT * FROM ";
+	query += targetTable;
+	query += " WHERE ID = \"";
+	query += id;
+	query += "\";";
+
+	if (mysql_query(connectedDatabase, query.c_str()) != 0)
+	{
+		return false;
+	}
+
+	// -> Select문은 제가 물어보고 "가져오는" 거니까! 실제로 어딘가에 저장해야겠죠!
+	// -> mySQL이 제가 질문한것의 답을 가지고 있어요! 그걸 내놓으라고 말해야해요!
+	queryResult = mysql_store_result(connectedDatabase);
+
+	// -> 줄 형태로 가져와야 하기 때문에! 이걸 한 번 더 늘입니다!
+	queryRow = mysql_fetch_row(queryResult);
+
+	return true;
+}
 
 /// <summary>
 /// => 유저 정보를 저장
@@ -75,16 +107,37 @@ void MySQLClose()
 /// <param name="color"> 유저의 색상 </param>
 void SaveUser(string id, string color)
 {
-	// -> INSERT INTO UserData (ID, COLOR) VALUES (id, color);
+	string query;
 
-	string query = "INSERT INTO UserData (ID, COLOR) VALUES (\"";
+	// -> 일단 유저를 불러옵니다!
+	if (LoadUser(id))
+	{
+		// -> 유저가 이미 있다면 값만 업데이트
 
-	// -> 쿼리에 ID, COLOR추가해주기!
-	query += id;
-	query += "\", \"";
-	query += color;
-	query += "\");";
+		// -> UPDATE UserData SET COLOR = "color" WHERE ID = "id";
+		query = "UPDATE ";
+		query += targetTable;
+		query += " SET COLOR=\"";
+		query += color;
+		query += "\" WHERE ID = \"";
+		query += id;
+		query += "\";";
+	}
+	else
+	{
+		// -> 유저가 없다면 새로 추가
 
+		// -> INSERT INTO UserData (ID, COLOR) VALUES ("id", "color");
+		query = "INSERT INTO ";
+		query += targetTable;
+		query += "(ID, COLOR) VALUES(\"";
+		query += id;
+		query += "\", \"";
+		query += color;
+		query += "\");";
+	}
+
+	// -> 파라미터로 "데이터를 저장할 저장소", "저장할 데이터"
 	if (mysql_query(connectedDatabase, query.c_str()) != 0)
 	{
 		cout << "Cannot Save Data" << endl;
